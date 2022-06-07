@@ -6,6 +6,7 @@ import (
 	"go-oauth/controllers"
 	"go-oauth/middlewares"
 	"io"
+	"net/http"
 	"os"
 )
 
@@ -47,6 +48,12 @@ func Setup() *gin.Engine {
 	app.POST("/api/users", controllers.CreateUser)
 	app.PUT("/api/users/:id", controllers.UpdateUser)
 	app.DELETE("/api/users/:id", controllers.DeleteUser)
+
+	app.GET("/api/test", func(context *gin.Context) {
+		context.JSON(http.StatusOK,gin.H{
+			"message": "OK",
+		})
+	})
 
 	return app
 }

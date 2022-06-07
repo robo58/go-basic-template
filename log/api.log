@@ -4,6 +4,9 @@
 [GIN-debug] POST   /api/users                --> go-oauth/controllers.CreateUser (4 handlers)
 [GIN-debug] PUT    /api/users/:id            --> go-oauth/controllers.UpdateUser (4 handlers)
 [GIN-debug] DELETE /api/users/:id            --> go-oauth/controllers.DeleteUser (4 handlers)
+[GIN-debug] GET    /api/test                 --> go-oauth/router.Setup.func2 (4 handlers)
 [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
 Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
 [GIN-debug] Listening and serving HTTP on :3000
+172.22.0.1 - - [07/Jun/2022:10:36:58 +0000] "GET /api/test HTTP/1.1 200 62.641µs " " Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36" " "
+172.22.0.1 - - [07/Jun/2022:10:37:05 +0000] "GET /api/users HTTP/1.1 200 4.721442ms " " Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36" " "
