@@ -1,36 +1,18 @@
-FROM golang:1.17-alpine AS build_base
+FROM golang:1.17 as base
 
-ENV CGO_ENABLED=1
-ENV GO111MODULE=on
-RUN apk add --no-cache git  git gcc g++
+FROM base as dev
 
-# Set the Current Working Directory inside the container
-WORKDIR /src
+RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
-# We want to populate the module cache based on the go.{mod,sum} files.
-COPY go.mod .
-COPY go.sum .
+WORKDIR /opt/app/api
+CMD ["air"]
 
-RUN go mod download
+# Create another stage called "dev" that is based off of our "base" stage (so we have golang available to us)
+FROM base as dev
 
-COPY . .
+# Install the air binary so we get live code-reloading when we save files
+RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
-# Build the Go app
-RUN go build -o ./out/app ./cmd/api/main.go
-
-# Start fresh from a smaller image
-FROM alpine:3.12
-RUN apk add ca-certificates
-
-WORKDIR /app
-
-COPY --from=build_base /src/out/app /app/restapi
-COPY --from=build_base /src/data /app/data
-
-RUN chmod +x restapi
-
-# This container exposes port 8080 to the outside world
-EXPOSE 3000
-
-# Run the binary program produced by `go install`
-ENTRYPOINT ./restapi
+# Run the air command in the directory where our code will live
+WORKDIR /opt/app/api
+CMD ["air"]

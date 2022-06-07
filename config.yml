@@ -1,9 +1,9 @@
 database:
   driver: "mysql"
-  dbname: "goauth"
-  username: "root"
-  password: ""
-  host: "localhost"
+  dbname: "go_database"
+  username: "go_test"
+  password: "password"
+  host: "db"
   port: "3306"
   max_lifetime: 7200
   max_open_conns: 150
