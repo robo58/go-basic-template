@@ -7,7 +7,12 @@ services:
       target: dev
     volumes:
       - .:/opt/app/api
-
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - backend
 
   db:
     image: mysql:8.0
@@ -22,7 +27,13 @@ services:
       - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
       - "3306:3306"
+    networks:
+      - backend
+
 
 volumes:
   db-data:
     driver: local
+
+networks:
+  backend:
